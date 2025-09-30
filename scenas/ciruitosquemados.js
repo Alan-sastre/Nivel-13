@@ -30,17 +30,20 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     create() {
-        // Crear fondo espacial mejorado
-        this.createEnhancedBackground();
-        
-        // Título principal con efectos mejorados
-        this.createEnhancedTitle();
-
-        // Crear recuadro inicial mejorado
-        this.createEnhancedDialog();
-
-        // Configurar música ambiente
-        this.setupAmbientMusic();
+        // Versión ultra-ligera para móviles
+        if (this.sys.game.device.os.desktop) {
+            // Versión completa para escritorio
+            this.createEnhancedBackground();
+            this.createEnhancedTitle();
+            this.createEnhancedDialog();
+            this.setupAmbientMusic();
+        } else {
+            // Versión ultra-ligera para móviles
+            this.createMobileBackground();
+            this.createSimpleTitle();
+            this.createSimpleDialog();
+            this.setupAmbientMusic();
+        }
     }
 
     setupAmbientMusic() {
@@ -52,7 +55,67 @@ class CircuitosQuemados extends Phaser.Scene {
         }
     }
 
+    createMobileBackground() {
+        // Fondo simple para móviles
+        this.add.rectangle(0, 0, this.cameras.main.width, this.cameras.main.height, 0x000022)
+            .setOrigin(0, 0);
+        
+        // Añadir algunas estrellas estáticas
+        for (let i = 0; i < 20; i++) {
+            this.add.circle(
+                Phaser.Math.Between(0, this.cameras.main.width),
+                Phaser.Math.Between(0, this.cameras.main.height),
+                Phaser.Math.FloatBetween(0.5, 1.5),
+                0xFFFFFF,
+                Phaser.Math.FloatBetween(0.5, 1)
+            );
+        }
+    }
+    
+    createSimpleTitle() {
+        this.add.text(this.cameras.main.centerX, 50, '🏆 MEDALLAS 🏆', {
+            fontSize: '24px',
+            fill: '#FFD700',
+            fontStyle: 'bold',
+            align: 'center'
+        }).setOrigin(0.5);
+    }
+    
+    createSimpleDialog() {
+        // Fondo del diálogo simple
+        const dialog = this.add.graphics();
+        dialog.fillStyle(0x000033, 0.9);
+        dialog.lineStyle(2, 0xFFD700, 1);
+        dialog.fillRoundedRect(20, 100, this.cameras.main.width - 40, 200, 10);
+        dialog.strokeRoundedRect(20, 100, this.cameras.main.width - 40, 200, 10);
+        
+        // Texto simple
+        this.add.text(this.cameras.main.centerX, 150, '¡Bienvenido a la ceremonia de premiación!', {
+            fontSize: '16px',
+            fill: '#FFFFFF',
+            align: 'center',
+            wordWrap: { width: this.cameras.main.width - 80 }
+        }).setOrigin(0.5);
+        
+        // Botón de continuar
+        const button = this.add.rectangle(this.cameras.main.centerX, 250, 200, 40, 0x4CAF50)
+            .setInteractive();
+            
+        this.add.text(this.cameras.main.centerX, 250, 'Comenzar', {
+            fontSize: '18px',
+            fill: '#FFFFFF',
+            align: 'center'
+        }).setOrigin(0.5);
+        
+        button.on('pointerdown', () => {
+            this.scene.start('MenuPrincipal'); // Ajusta esto según tu juego
+        });
+    }
+    
     createEnhancedBackground() {
+        // Versión original solo para escritorio
+        if (!this.sys.game.device.os.desktop) return;
+        
         // Gradiente de fondo espacial ultra realista con múltiples capas
         const gradient = this.add.graphics();
         
@@ -96,7 +159,10 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createCosmicRays() {
-        for (let i = 0; i < 5; i++) {
+        // Solo crear rayos cósmicos en escritorio
+        if (!this.sys.game.device.os.desktop) return;
+        
+        for (let i = 0; i < 3; i++) { // Menos rayos
             const ray = this.add.graphics();
             ray.lineStyle(1, 0x88AAFF, 0.3);
             
@@ -122,8 +188,10 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createNebulae() {
-        // Reducir número de nebulosas
-        const nebulaCount = this.sys.game.device.os.desktop ? 3 : 2;
+        // Solo crear nebulosas en escritorio
+        if (!this.sys.game.device.os.desktop) return;
+        
+        const nebulaCount = 2; // Muy pocas nebulosas
         for (let i = 0; i < nebulaCount; i++) {
             const nebulaContainer = this.add.container();
             
@@ -202,11 +270,10 @@ class CircuitosQuemados extends Phaser.Scene {
         }
     }
 
-    createEnhancedStars() {
-        // Reducción de estrellas para mejor rendimiento
-        const starCount = this.sys.game.device.os.desktop ? 100 : 50; // Menos estrellas en móvil
+    createReducedStars() {
+        // Versión optimizada de estrellas para móvil
+        const starCount = 30; // Muy pocas estrellas para móvil
         
-        // Estrellas pequeñas (reducidas a la mitad)
         for (let i = 0; i < starCount; i++) {
             const starContainer = this.add.container();
             const x = Phaser.Math.Between(0, this.cameras.main.width);
@@ -344,8 +411,10 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createFloatingParticles() {
-        // Reducir partículas flotantes
-        const particleCount = this.sys.game.device.os.desktop ? 10 : 5;
+        // Solo crear partículas en escritorio
+        if (!this.sys.game.device.os.desktop) return;
+        
+        const particleCount = 5; // Muy pocas partículas
         for (let i = 0; i < particleCount; i++) {
             const particle = this.add.circle(
                 Phaser.Math.Between(0, this.cameras.main.width),
@@ -371,7 +440,8 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createEnhancedTitle() {
-        // Título simple sin recuadro
+        if (!this.sys.game.device.os.desktop) return;
+        
         this.titleText = this.add.text(this.cameras.main.centerX, 80, 
             '🏆 MEDALLAS DE HONOR 🏆', {
             fontSize: '32px',
@@ -401,6 +471,8 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createEnhancedDialog() {
+        if (!this.sys.game.device.os.desktop) return;
+        
         // Fondo del diálogo con efectos mejorados
         this.dialogBox = this.add.graphics();
         this.dialogBox.fillStyle(0x000033, 0.9);
