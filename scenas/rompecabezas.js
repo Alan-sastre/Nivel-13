@@ -443,6 +443,6 @@ class Rompecabezas extends Phaser.Scene {
         });
 
         this.cameras.main.flash(1500, 0, 255, 0);
-        this.time.delayedCall(3000, () => this.scene.start('drone_repair'));
+        this.time.delayedCall(3000, () => this.scene.start('DroneRepairScene'));
     }
 }

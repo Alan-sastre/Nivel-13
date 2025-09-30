@@ -29,10 +29,7 @@ var config = {
     roundPixels: false,
   },
   scene: [
-    scenaPrincipal,
-    scenaVideo,
-    scenaFallos,
-    scenaVideo2,
+
     Rompecabezas,
     DroneRepairScene,
     ScenaPregunta1,
