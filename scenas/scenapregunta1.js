@@ -1886,7 +1886,7 @@ class ScenaPregunta1 extends Phaser.Scene {
                         yoyo: true,
                         onComplete: () => {
                             // Transición a la siguiente escena
-                            this.scene.start('Video2');
+                            this.scene.start('CircuitosQuemados');
                         }
                     });
                     

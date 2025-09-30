@@ -30,7 +30,6 @@ var config = {
   },
   scene: [
 
-    ScenaPregunta1,
     CircuitosQuemados,
     scenaVideo4,
     Ultima,
