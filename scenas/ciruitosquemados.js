@@ -122,8 +122,9 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createNebulae() {
-        // Nebulosas ultra realistas con múltiples capas y efectos
-        for (let i = 0; i < 5; i++) {
+        // Reducir número de nebulosas
+        const nebulaCount = this.sys.game.device.os.desktop ? 3 : 2;
+        for (let i = 0; i < nebulaCount; i++) {
             const nebulaContainer = this.add.container();
             
             // Colores más realistas y variados para nebulosas
@@ -157,8 +158,9 @@ class CircuitosQuemados extends Phaser.Scene {
             nebulaCore.fillCircle(0, 0, Phaser.Math.Between(40, 80));
             nebulaCore.setBlendMode(Phaser.BlendModes.ADD);
             
-            // Partículas de polvo estelar
-            for (let j = 0; j < 8; j++) {
+            // Reducir partículas de polvo estelar
+            const dustParticles = this.sys.game.device.os.desktop ? 4 : 2;
+            for (let j = 0; j < dustParticles; j++) {
                 const dust = this.add.graphics();
                 dust.fillStyle(0xffffff, 0.1);
                 const dustX = Phaser.Math.Between(-60, 60);
@@ -201,10 +203,11 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createEnhancedStars() {
-        // Estrellas de fondo ultra realistas con diferentes tipos
+        // Reducción de estrellas para mejor rendimiento
+        const starCount = this.sys.game.device.os.desktop ? 100 : 50; // Menos estrellas en móvil
         
-        // Estrellas pequeñas (la mayoría)
-        for (let i = 0; i < 200; i++) {
+        // Estrellas pequeñas (reducidas a la mitad)
+        for (let i = 0; i < starCount; i++) {
             const starContainer = this.add.container();
             const x = Phaser.Math.Between(0, this.cameras.main.width);
             const y = Phaser.Math.Between(0, this.cameras.main.height);
@@ -243,8 +246,9 @@ class CircuitosQuemados extends Phaser.Scene {
             this.stars.push(starContainer);
         }
         
-        // Estrellas medianas brillantes
-        for (let i = 0; i < 30; i++) {
+        // Reducir estrellas medianas
+        const mediumStars = this.sys.game.device.os.desktop ? 15 : 8;
+        for (let i = 0; i < mediumStars; i++) {
             const starContainer = this.add.container();
             const x = Phaser.Math.Between(0, this.cameras.main.width);
             const y = Phaser.Math.Between(0, this.cameras.main.height);
@@ -288,8 +292,9 @@ class CircuitosQuemados extends Phaser.Scene {
             this.stars.push(starContainer);
         }
         
-        // Estrellas gigantes (pocas pero muy brillantes)
-        for (let i = 0; i < 8; i++) {
+        // Reducir estrellas gigantes
+        const bigStars = this.sys.game.device.os.desktop ? 4 : 2;
+        for (let i = 0; i < bigStars; i++) {
             const starContainer = this.add.container();
             const x = Phaser.Math.Between(50, this.cameras.main.width - 50);
             const y = Phaser.Math.Between(50, this.cameras.main.height - 50);
@@ -339,7 +344,9 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     createFloatingParticles() {
-        for (let i = 0; i < 20; i++) {
+        // Reducir partículas flotantes
+        const particleCount = this.sys.game.device.os.desktop ? 10 : 5;
+        for (let i = 0; i < particleCount; i++) {
             const particle = this.add.circle(
                 Phaser.Math.Between(0, this.cameras.main.width),
                 Phaser.Math.Between(0, this.cameras.main.height),
