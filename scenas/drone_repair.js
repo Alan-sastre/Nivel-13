@@ -976,7 +976,7 @@ class DroneRepairScene extends Phaser.Scene {
                 nextButton.setFill('#00ff00');
             });
             nextButton.on('pointerdown', () => {
-                this.scene.start('Ultima');
+                this.scene.start('ScenaPregunta1');
             });
         } else {
             // Para derrota, mostrar botón de reiniciar

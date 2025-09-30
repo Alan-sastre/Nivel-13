@@ -30,8 +30,6 @@ var config = {
   },
   scene: [
 
-    Rompecabezas,
-    DroneRepairScene,
     ScenaPregunta1,
     CircuitosQuemados,
     scenaVideo4,
