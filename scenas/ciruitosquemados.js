@@ -47,10 +47,54 @@ class CircuitosQuemados extends Phaser.Scene {
     }
 
     setupAmbientMusic() {
-        if (this.sound.get('backgroundMusic')) {
-            const music = this.sound.get('backgroundMusic');
-            if (!music.isPlaying) {
-                music.play({ loop: true, volume: 0.3 });
+        // Crear el sonido pero no reproducirlo aún
+        if (!this.sound.get('backgroundMusic')) {
+            const music = this.sound.add('backgroundMusic', { 
+                loop: true, 
+                volume: 0.3 
+            });
+            
+            // Configurar el botón para iniciar la música
+            const startButton = this.add.rectangle(
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY, 
+                200, 
+                50, 
+                0x4CAF50
+            )
+            .setInteractive()
+            .setVisible(!this.sys.game.device.os.desktop); // Solo visible en móviles
+            
+            const buttonText = this.add.text(
+                this.cameras.main.centerX, 
+                this.cameras.main.centerY, 
+                'Iniciar Música', 
+                { 
+                    fontSize: '20px', 
+                    color: '#FFFFFF' 
+                }
+            ).setOrigin(0.5);
+            
+            const startMusic = () => {
+                music.play();
+                startButton.destroy();
+                buttonText.destroy();
+            };
+            
+            // Reproducir con el primer toque en móviles
+            startButton.on('pointerdown', startMusic);
+            
+            // En escritorio, intentar reproducir automáticamente
+            if (this.sys.game.device.os.desktop) {
+                const playPromise = music.play();
+                
+                // Si falla el autoplay, mostrar el botón
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        startButton.setVisible(true);
+                        buttonText.setVisible(true);
+                    });
+                }
             }
         }
     }
@@ -98,17 +142,49 @@ class CircuitosQuemados extends Phaser.Scene {
         }).setOrigin(0.5);
         
         // Botón de continuar
-        const button = this.add.rectangle(this.cameras.main.centerX, 250, 200, 40, 0x4CAF50)
-            .setInteractive();
-            
-        this.add.text(this.cameras.main.centerX, 250, 'Comenzar', {
-            fontSize: '18px',
-            fill: '#FFFFFF',
-            align: 'center'
-        }).setOrigin(0.5);
+        const button = this.add.rectangle(
+            this.cameras.main.centerX, 
+            250, 
+            200, 
+            40, 
+            0x4CAF50
+        )
+        .setInteractive()
+        .setDepth(1);
         
+        const buttonText = this.add.text(
+            this.cameras.main.centerX, 
+            250, 
+            'Comenzar', 
+            {
+                fontSize: '18px',
+                fill: '#FFFFFF',
+                align: 'center'
+            }
+        ).setOrigin(0.5).setDepth(2);
+        
+        // Manejar el evento de clic/touch
         button.on('pointerdown', () => {
-            this.scene.start('MenuPrincipal'); // Ajusta esto según tu juego
+            // Detener la música si está sonando
+            if (this.sound.get('backgroundMusic')) {
+                this.sound.get('backgroundMusic').stop();
+            }
+            
+            // Hacer una transición suave
+            this.cameras.main.fadeOut(500, 0, 0, 0, (camera, progress) => {
+                if (progress === 1) { // Cuando la transición termina
+                    // Verificar si la escena 'MenuPrincipal' existe antes de intentar iniciarla
+                    if (this.scene.get('MenuPrincipal')) {
+                        this.scene.start('MenuPrincipal');
+                    } else if (this.scene.get('menu')) {
+                        // Si no existe, intentar con 'menu' (minúscula) que es más común
+                        this.scene.start('menu');
+                    } else {
+                        // Si no existe ninguna de las anteriores, recargar la escena actual
+                        this.scene.restart();
+                    }
+                }
+            });
         });
     }
     
