@@ -29,13 +29,19 @@ var config = {
     roundPixels: false,
   },
   scene: [
+    scenaPrincipal,
+    scenaVideo,
+    scenaFallos,
+    scenaVideo2,
+    Rompecabezas,
+    DroneRepairScene,
+    ScenaPregunta1,
 
-    CircuitosQuemados,
     scenaVideo4,
     Ultima,
   ],
 };
-//
+//    CircuitosQuemados,
 
 // Crear el contenedor del juego
 const gameContainer = document.createElement("div");
