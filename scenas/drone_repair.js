@@ -1160,7 +1160,7 @@ class DroneRepairScene extends Phaser.Scene {
 
         // Subtítulo
         this.instructionSubtitle = this.add.text(500, 155, 'Reparación de Drones - Instrucciones', {
-            fontSize: '16px',
+            fontSize: '18px',
             fill: '#ffffff',
             fontFamily: 'Arial'
         }).setOrigin(0.5);
@@ -1177,7 +1177,7 @@ class DroneRepairScene extends Phaser.Scene {
         let yPos = 190;
         instructions.forEach(instruction => {
             const textElement = this.add.text(200, yPos, instruction, {
-                fontSize: '12px',
+                fontSize: '20px',
                 fill: '#ffffff',
                 fontFamily: 'Arial',
                 wordWrap: { width: 600 }

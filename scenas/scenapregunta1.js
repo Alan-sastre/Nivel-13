@@ -748,39 +748,19 @@ class ScenaPregunta1 extends Phaser.Scene {
         // Botón para comenzar - AGRANDADO por solicitud del usuario
         const startButton = this.add.graphics();
         startButton.fillStyle(0x0066cc, 0.9);
-        startButton.fillRoundedRect(width/2 - 140, height/2 + 50, 280, 70, 15);
+        startButton.fillRoundedRect(width/2 - 140, height/2 + 80, 280, 70, 15);
         startButton.lineStyle(3, 0x00ffff, 1);
-        startButton.strokeRoundedRect(width/2 - 140, height/2 + 50, 280, 70, 15);
-        startButton.setInteractive(new Phaser.Geom.Rectangle(width/2 - 140, height/2 + 50, 280, 70), Phaser.Geom.Rectangle.Contains);
+        startButton.strokeRoundedRect(width/2 - 140, height/2 + 80, 280, 70, 15);
+        startButton.setInteractive(new Phaser.Geom.Rectangle(width/2 - 140, height/2 + 80, 280, 70), Phaser.Geom.Rectangle.Contains);
         
         // Texto del botón - AGRANDADO
-        const startButtonText = this.add.text(width/2, height/2 + 85, 'DA CLICK PARA COMENZAR', {
+        const startButtonText = this.add.text(width/2, height/2 + 115, 'DA CLICK PARA COMENZAR', {
             fontSize: '20px',
             fill: '#ffffff',
             fontFamily: 'Arial',
             fontStyle: 'bold'
         }).setOrigin(0.5);
         
-        // Efectos hover del botón
-        startButton.on('pointerover', () => {
-            this.tweens.add({
-                targets: [startButton, startButtonText],
-                scaleX: 1.05,
-                scaleY: 1.05,
-                duration: 200,
-                ease: 'Back.easeOut'
-            });
-        });
-        
-        startButton.on('pointerout', () => {
-            this.tweens.add({
-                targets: [startButton, startButtonText],
-                scaleX: 1,
-                scaleY: 1,
-                duration: 200,
-                ease: 'Back.easeOut'
-            });
-        });
         
         // Acción del botón - comenzar el juego
         startButton.on('pointerdown', () => {
@@ -1809,7 +1789,7 @@ class ScenaPregunta1 extends Phaser.Scene {
                 }).setOrigin(0.5).setAlpha(0);
 
                 // Etiqueta descriptiva del botón
-                const buttonLabel = this.add.text(width/2, height/2 + 200, 'SIGUIENTE MISIÓN', {
+                const buttonLabel = this.add.text(width/2, height/2 + 200, '', {
                     fontSize: '14px',
                     fill: '#88ccff',
                     fontFamily: 'Arial',
@@ -2079,7 +2059,7 @@ class ScenaPregunta1 extends Phaser.Scene {
                     }).setOrigin(0.5);
 
                     // Etiqueta del botón - debajo del hexágono
-                    const buttonLabel = this.add.text(width/2, height/2 + 155, 'REINICIAR SECUENCIA', {
+                    const buttonLabel = this.add.text(width/2, height/2 + 155, '', {
                         fontSize: '10px',
                         fill: '#66aaff',
                         fontFamily: 'Arial',
